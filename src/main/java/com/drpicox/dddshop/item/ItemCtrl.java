@@ -1,5 +1,6 @@
-package com.drpicox.dddshop;
+package com.drpicox.dddshop.item;
 
+import com.drpicox.dddshop.Money;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.HashMap;

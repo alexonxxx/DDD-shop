@@ -1,5 +1,9 @@
 package com.drpicox.dddshop;
 
+import com.drpicox.dddshop.cashregister.CashRegisterCtrl;
+import com.drpicox.dddshop.cashregister.CashRegisterId;
+import com.drpicox.dddshop.item.ItemCtrl;
+import com.drpicox.dddshop.item.ItemId;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,7 @@
-package com.drpicox.dddshop;
+package com.drpicox.dddshop.cashregister;
+
+import com.drpicox.dddshop.item.ItemId;
+import com.drpicox.dddshop.Money;
 
 public class CashRegister {
 

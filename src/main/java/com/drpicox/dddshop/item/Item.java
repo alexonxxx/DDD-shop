@@ -1,4 +1,6 @@
-package com.drpicox.dddshop;
+package com.drpicox.dddshop.item;
+
+import com.drpicox.dddshop.Money;
 
 public class Item {
     private Money price;
