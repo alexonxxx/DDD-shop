@@ -30,39 +30,43 @@ public class CashRegisterCtrl {
     }
 
     public void recordItem(CashRegisterId cashRegisterId, ItemId itemId) {
-        CashRegister cashRegister = cashRegisters.get(cashRegisterId);
+        CashRegister cashRegister = cashRegisterRepository.findOne(cashRegisterId.getId());
         Money price = itemCtrl.getPrice(itemId);
 
         cashRegister.recordItem(itemId, price);
+        cashRegisterRepository.save(cashRegister);
     }
 
     public void endItemRecords(CashRegisterId cashRegisterId) {
-        CashRegister cashRegister = cashRegisters.get(cashRegisterId);
+        CashRegister cashRegister = cashRegisterRepository.findOne(cashRegisterId.getId());
         cashRegister.endItemRecords();
+        cashRegisterRepository.save(cashRegister);
     }
 
     public Money getTotal(CashRegisterId cashRegisterId) {
-        CashRegister cashRegister = cashRegisters.get(cashRegisterId);
+        CashRegister cashRegister = cashRegisterRepository.findOne(cashRegisterId.getId());
         return cashRegister.getTotal();
     }
 
     public void recordCashDelivered(CashRegisterId cashRegisterId, Money cashDelivered) {
-        CashRegister cashRegister = cashRegisters.get(cashRegisterId);
+        CashRegister cashRegister = cashRegisterRepository.findOne(cashRegisterId.getId());
         cashRegister.recordCashDelivered(cashDelivered);
+        cashRegisterRepository.save(cashRegister);
     }
 
     public Money getChange(CashRegisterId cashRegisterId) {
-        CashRegister cashRegister = cashRegisters.get(cashRegisterId);
+        CashRegister cashRegister = cashRegisterRepository.findOne(cashRegisterId.getId());
         return cashRegister.getChange();
     }
 
     public void endShoppingTransaction(CashRegisterId cashRegisterId) {
-        CashRegister cashRegister = cashRegisters.get(cashRegisterId);
+        CashRegister cashRegister = cashRegisterRepository.findOne(cashRegisterId.getId());
         cashRegister.endShoppingTransaction();
+        cashRegisterRepository.save(cashRegister);
     }
 
     public boolean isReadyToRecordANewItem(CashRegisterId cashRegisterId) {
-        CashRegister cashRegister = cashRegisters.get(cashRegisterId);
+        CashRegister cashRegister = cashRegisterRepository.findOne(cashRegisterId.getId());
         return cashRegister.isReadyToRecordANewItem();
     }
 }

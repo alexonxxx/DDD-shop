@@ -1,7 +1,13 @@
 package com.drpicox.dddshop.cashregister;
 
 public class CashRegisterId {
-    public CashRegisterId(Long id) {
+    private Long id;
 
+    public CashRegisterId(Long id) {
+        this.id = id;
+    }
+
+    public Long getId() {
+        return id;
     }
 }
