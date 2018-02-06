@@ -18,14 +18,11 @@ public class CashRegisterCtrl {
     @Autowired
     private CashRegisterRepository cashRegisterRepository;
 
-    private Map<CashRegisterId,CashRegister> cashRegisters = new HashMap<>();
-
     public CashRegisterId createCashRegister() {
         CashRegister cashRegister = new CashRegister();
         cashRegisterRepository.save(cashRegister);
 
         CashRegisterId cashRegisterId = cashRegister.getCashRegisterId();
-        cashRegisters.put(cashRegisterId, cashRegister);
         return cashRegisterId;
     }
 
