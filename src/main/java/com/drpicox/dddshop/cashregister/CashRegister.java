@@ -3,7 +3,16 @@ package com.drpicox.dddshop.cashregister;
 import com.drpicox.dddshop.item.ItemId;
 import com.drpicox.dddshop.Money;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+
+@Entity
 public class CashRegister {
+
+    @Id
+    @GeneratedValue
+    private Long id;
 
     private Money total;
     private Money cashDelivered;
@@ -33,5 +42,10 @@ public class CashRegister {
 
     public boolean isReadyToRecordANewItem() {
         return true;
+    }
+
+
+    public CashRegisterId getCashRegisterId() {
+        return new CashRegisterId(id);
     }
 }

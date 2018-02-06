@@ -1,8 +1,9 @@
 package com.drpicox.dddshop;
 
+import java.io.Serializable;
 import java.util.Objects;
 
-public class Money {
+public class Money implements Serializable {
     private int quantity;
 
     public Money(int quantity) {

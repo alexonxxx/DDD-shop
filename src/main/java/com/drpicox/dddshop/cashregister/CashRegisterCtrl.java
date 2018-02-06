@@ -15,12 +15,16 @@ public class CashRegisterCtrl {
     @Autowired
     private ItemCtrl itemCtrl;
 
+    @Autowired
+    private CashRegisterRepository cashRegisterRepository;
+
     private Map<CashRegisterId,CashRegister> cashRegisters = new HashMap<>();
 
     public CashRegisterId createCashRegister() {
-        CashRegisterId cashRegisterId = new CashRegisterId();
         CashRegister cashRegister = new CashRegister();
+        cashRegisterRepository.save(cashRegister);
 
+        CashRegisterId cashRegisterId = cashRegister.getCashRegisterId();
         cashRegisters.put(cashRegisterId, cashRegister);
         return cashRegisterId;
     }
