@@ -5,8 +5,8 @@ public class CashRegister {
     private Money total;
     private Money cashDelivered;
 
-    public void recordItem(Item item) {
-        total = item.getPrice();
+    public void recordItem(ItemId itemId, Money price) {
+        total = price;
     }
 
     public void endItemRecords() {

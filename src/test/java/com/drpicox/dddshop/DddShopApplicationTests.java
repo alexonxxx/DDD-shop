@@ -2,6 +2,7 @@ package com.drpicox.dddshop;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -12,7 +13,13 @@ import static org.junit.Assert.assertEquals;
 @SpringBootTest
 public class DddShopApplicationTests {
 
-	@Test
+    @Autowired
+    private ItemCtrl itemCtrl;
+
+    @Autowired
+    private CashRegisterCtrl cashRegisterCtrl;
+
+    @Test
 	public void contextLoads() {
 	}
 
@@ -32,29 +39,29 @@ public class DddShopApplicationTests {
     */
 	@Test
     public void sellOneItem() {
-        Item item = getItemWithPriceInMoney();
-        Money price = item.getPrice();
-        CashRegister cashRegister = getCashRegister();
+        ItemId itemId = getItemWithPriceInMoney();
+        Money price = itemCtrl.getPrice(itemId);
+        CashRegisterId cashRegisterId = getCashRegister();
 
-        cashRegister.recordItem(item);
-        cashRegister.endItemRecords();
-        Money total = cashRegister.getTotal();
+        cashRegisterCtrl.recordItem(cashRegisterId, itemId);
+        cashRegisterCtrl.endItemRecords(cashRegisterId);
+        Money total = cashRegisterCtrl.getTotal(cashRegisterId);
         Money cashDelivered = getCashDeliveredByCustomer();
-        cashRegister.recordCashDelivered(cashDelivered);
-        Money change = cashRegister.getChange();
-        cashRegister.endShoppingTransaction();
+        cashRegisterCtrl.recordCashDelivered(cashRegisterId, cashDelivered);
+        Money change = cashRegisterCtrl.getChange(cashRegisterId);
+        cashRegisterCtrl.endShoppingTransaction(cashRegisterId);
 
         assertEquals(price, total);
         assertEquals(new Money(3), change);
-        assertEquals(true, cashRegister.isReadyToRecordANewItem());
+        assertEquals(true, cashRegisterCtrl.isReadyToRecordANewItem(cashRegisterId));
     }
 
-    public Item getItemWithPriceInMoney() {
-        return new Item(new Money(17));
+    public ItemId getItemWithPriceInMoney() {
+	    return itemCtrl.createItem(new Money(17));
     }
 
-    public CashRegister getCashRegister() {
-        return new CashRegister();
+    public CashRegisterId getCashRegister() {
+        return cashRegisterCtrl.createCashRegister();
     }
 
     public Money getCashDeliveredByCustomer() {
