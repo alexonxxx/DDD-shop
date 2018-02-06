@@ -44,20 +44,52 @@ public class DddShopApplicationTests {
 	@Test
     public void sellOneItem() {
         ItemId itemId = getItemWithPriceInMoney();
-        Money price = itemCtrl.getPrice(itemId);
+        Money price = getPrice(itemId);
         CashRegisterId cashRegisterId = getCashRegister();
 
-        cashRegisterCtrl.recordItem(cashRegisterId, itemId);
-        cashRegisterCtrl.endItemRecords(cashRegisterId);
-        Money total = cashRegisterCtrl.getTotal(cashRegisterId);
+        recordItem(itemId, cashRegisterId);
+        endItemRecords(cashRegisterId);
+        Money total = getTotal(cashRegisterId);
         Money cashDelivered = getCashDeliveredByCustomer();
-        cashRegisterCtrl.recordCashDelivered(cashRegisterId, cashDelivered);
-        Money change = cashRegisterCtrl.getChange(cashRegisterId);
-        cashRegisterCtrl.endShoppingTransaction(cashRegisterId);
+        recordCashDelivered(cashRegisterId, cashDelivered);
+        Money change = getChange(cashRegisterId);
+        endShoppingTransaction(cashRegisterId);
 
         assertEquals(price, total);
         assertEquals(new Money(3), change);
-        assertEquals(true, cashRegisterCtrl.isReadyToRecordANewItem(cashRegisterId));
+        assertEquals(true, isReadyToRecordANewItem(cashRegisterId));
+    }
+
+    private boolean isReadyToRecordANewItem(CashRegisterId cashRegisterId) {
+        return cashRegisterCtrl.isReadyToRecordANewItem(cashRegisterId);
+    }
+
+    private void endShoppingTransaction(CashRegisterId cashRegisterId) {
+        cashRegisterCtrl.endShoppingTransaction(cashRegisterId);
+    }
+
+    private Money getChange(CashRegisterId cashRegisterId) {
+        return cashRegisterCtrl.getChange(cashRegisterId);
+    }
+
+    private void recordCashDelivered(CashRegisterId cashRegisterId, Money cashDelivered) {
+        cashRegisterCtrl.recordCashDelivered(cashRegisterId, cashDelivered);
+    }
+
+    private Money getTotal(CashRegisterId cashRegisterId) {
+        return cashRegisterCtrl.getTotal(cashRegisterId);
+    }
+
+    private void endItemRecords(CashRegisterId cashRegisterId) {
+        cashRegisterCtrl.endItemRecords(cashRegisterId);
+    }
+
+    private Money getPrice(ItemId itemId) {
+        return itemCtrl.getPrice(itemId);
+    }
+
+    private void recordItem(ItemId itemId, CashRegisterId cashRegisterId) {
+        cashRegisterCtrl.recordItem(cashRegisterId, itemId);
     }
 
     public ItemId getItemWithPriceInMoney() {
