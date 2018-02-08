@@ -1,7 +1,7 @@
 package com.drpicox.dddshop.cashregister;
 
 import com.drpicox.dddshop.item.ItemId;
-import com.drpicox.dddshop.Money;
+import com.drpicox.dddshop.shared.Money;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

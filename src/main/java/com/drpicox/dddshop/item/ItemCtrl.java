@@ -1,6 +1,6 @@
 package com.drpicox.dddshop.item;
 
-import com.drpicox.dddshop.Money;
+import com.drpicox.dddshop.shared.Money;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 

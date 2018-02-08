@@ -1,4 +1,4 @@
-package com.drpicox.dddshop;
+package com.drpicox.dddshop.shared;
 
 import java.io.Serializable;
 import java.util.Objects;

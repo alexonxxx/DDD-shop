@@ -2,12 +2,9 @@ package com.drpicox.dddshop.cashregister;
 
 import com.drpicox.dddshop.item.ItemCtrl;
 import com.drpicox.dddshop.item.ItemId;
-import com.drpicox.dddshop.Money;
+import com.drpicox.dddshop.shared.Money;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 public class CashRegisterCtrl {

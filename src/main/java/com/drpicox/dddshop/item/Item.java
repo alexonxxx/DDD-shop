@@ -1,6 +1,6 @@
 package com.drpicox.dddshop.item;
 
-import com.drpicox.dddshop.Money;
+import com.drpicox.dddshop.shared.Money;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
