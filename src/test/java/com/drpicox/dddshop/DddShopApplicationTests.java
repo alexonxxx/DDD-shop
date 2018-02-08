@@ -2,6 +2,7 @@ package com.drpicox.dddshop;
 
 import com.drpicox.dddshop.cashregister.CashRegisterCtrl;
 import com.drpicox.dddshop.cashregister.CashRegisterId;
+import com.drpicox.dddshop.shared.Money;
 import com.drpicox.dddshop.item.ItemCtrl;
 import com.drpicox.dddshop.item.ItemId;
 import org.junit.Test;
@@ -44,23 +45,23 @@ public class DddShopApplicationTests {
 	@Test
     public void sellOneItem() {
         ItemId itemId = getItemWithPriceInMoney();
-        Money price = getPrice(itemId);
+        Money price = getItemPrice(itemId);
         CashRegisterId cashRegisterId = getCashRegister();
 
-        recordItem(itemId, cashRegisterId);
-        endItemRecords(cashRegisterId);
-        Money total = getTotal(cashRegisterId);
+        recordItemAtCashRegister(itemId, cashRegisterId);
+        endCashRegisterItemRecords(cashRegisterId);
+        Money total = getCashRegisterTotal(cashRegisterId);
         Money cashDelivered = getCashDeliveredByCustomer();
-        recordCashDelivered(cashRegisterId, cashDelivered);
-        Money change = getChange(cashRegisterId);
+        recordCashDeliveredAtCashRegister(cashDelivered, cashRegisterId);
+        Money change = getCashRegisterChange(cashRegisterId);
         endShoppingTransaction(cashRegisterId);
 
         assertEquals(price, total);
         assertEquals(new Money(3), change);
-        assertEquals(true, isReadyToRecordANewItem(cashRegisterId));
+        assertEquals(true, isCashRegisterReadyToRecordANewItem(cashRegisterId));
     }
 
-    private boolean isReadyToRecordANewItem(CashRegisterId cashRegisterId) {
+    private boolean isCashRegisterReadyToRecordANewItem(CashRegisterId cashRegisterId) {
         return cashRegisterCtrl.isReadyToRecordANewItem(cashRegisterId);
     }
 
@@ -68,27 +69,27 @@ public class DddShopApplicationTests {
         cashRegisterCtrl.endShoppingTransaction(cashRegisterId);
     }
 
-    private Money getChange(CashRegisterId cashRegisterId) {
+    private Money getCashRegisterChange(CashRegisterId cashRegisterId) {
         return cashRegisterCtrl.getChange(cashRegisterId);
     }
 
-    private void recordCashDelivered(CashRegisterId cashRegisterId, Money cashDelivered) {
+    private void recordCashDeliveredAtCashRegister(Money cashDelivered, CashRegisterId cashRegisterId) {
         cashRegisterCtrl.recordCashDelivered(cashRegisterId, cashDelivered);
     }
 
-    private Money getTotal(CashRegisterId cashRegisterId) {
+    private Money getCashRegisterTotal(CashRegisterId cashRegisterId) {
         return cashRegisterCtrl.getTotal(cashRegisterId);
     }
 
-    private void endItemRecords(CashRegisterId cashRegisterId) {
+    private void endCashRegisterItemRecords(CashRegisterId cashRegisterId) {
         cashRegisterCtrl.endItemRecords(cashRegisterId);
     }
 
-    private Money getPrice(ItemId itemId) {
+    private Money getItemPrice(ItemId itemId) {
         return itemCtrl.getPrice(itemId);
     }
 
-    private void recordItem(ItemId itemId, CashRegisterId cashRegisterId) {
+    private void recordItemAtCashRegister(ItemId itemId, CashRegisterId cashRegisterId) {
         cashRegisterCtrl.recordItem(cashRegisterId, itemId);
     }
 
