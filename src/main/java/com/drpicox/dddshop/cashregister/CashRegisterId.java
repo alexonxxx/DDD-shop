@@ -1,6 +1,8 @@
 package com.drpicox.dddshop.cashregister;
 
-public class CashRegisterId {
+import java.io.Serializable;
+
+public class CashRegisterId implements Serializable {
     private Long id;
 
     public CashRegisterId(Long id) {
@@ -9,5 +11,12 @@ public class CashRegisterId {
 
     public Long getId() {
         return id;
+    }
+
+    @Override
+    public String toString() {
+        return "CashRegisterId{" +
+                "id=" + id +
+                '}';
     }
 }

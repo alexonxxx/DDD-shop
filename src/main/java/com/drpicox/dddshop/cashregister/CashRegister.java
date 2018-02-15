@@ -13,7 +13,15 @@ public class CashRegister {
     private Long id;
 
     @OneToOne(cascade= CascadeType.ALL)
-    private Ticket ticket = new Ticket();
+    private Ticket ticket;
+
+    private Long nextTicketNumber = 0L;
+
+
+    public void startTransaction() {
+        nextTicketNumber++;
+        ticket = new Ticket(getCashRegisterId(), nextTicketNumber);
+    }
 
     public void recordItem(ItemId itemId, Money price) {
         ticket.recordItem(itemId, price);
@@ -44,7 +52,6 @@ public class CashRegister {
         return true;
     }
     public void endShoppingTransaction() {
-        ticket = new Ticket();
+        startTransaction();
     }
-
 }

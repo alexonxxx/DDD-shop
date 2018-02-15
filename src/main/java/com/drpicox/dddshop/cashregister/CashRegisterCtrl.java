@@ -19,6 +19,9 @@ public class CashRegisterCtrl {
         CashRegister cashRegister = new CashRegister();
         save(cashRegister);
 
+        cashRegister.startTransaction();
+        save(cashRegister);
+
         CashRegisterId cashRegisterId = cashRegister.getCashRegisterId();
         return cashRegisterId;
     }

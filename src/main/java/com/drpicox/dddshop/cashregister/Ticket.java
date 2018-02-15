@@ -9,12 +9,20 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@IdClass(TicketId.class)
 public class Ticket {
 
-    @Id @GeneratedValue
-    private Long id;
+    @Id
+    private CashRegisterId cashRegisterId;
+    @Id
+    private Long ticketNumber;
 
     private Money cashDelivered;
+
+    public Ticket(CashRegisterId cashRegisterId, Long ticketNumber) {
+        this.cashRegisterId = cashRegisterId;
+        this.ticketNumber = ticketNumber;
+    }
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<TicketLine> lines;
@@ -39,4 +47,5 @@ public class Ticket {
         return cashDelivered.minus(getTotal());
     }
 
+    Ticket(){}
 }
