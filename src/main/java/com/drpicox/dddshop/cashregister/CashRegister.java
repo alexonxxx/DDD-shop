@@ -3,9 +3,7 @@ package com.drpicox.dddshop.cashregister;
 import com.drpicox.dddshop.item.ItemId;
 import com.drpicox.dddshop.shared.Money;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 public class CashRegister {
@@ -14,6 +12,7 @@ public class CashRegister {
     @GeneratedValue
     private Long id;
 
+    @OneToOne(cascade= CascadeType.ALL)
     private Ticket ticket = new Ticket();
 
     public void recordItem(ItemId itemId, Money price) {
@@ -36,6 +35,9 @@ public class CashRegister {
         return new CashRegisterId(id);
     }
 
+    public Ticket getTicket() {
+        return ticket;
+    }
 
     public void endItemRecords() { }
     public boolean isReadyToRecordANewItem() {
