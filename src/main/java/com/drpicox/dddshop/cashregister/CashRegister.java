@@ -14,38 +14,35 @@ public class CashRegister {
     @GeneratedValue
     private Long id;
 
-    private Money total;
-    private Money cashDelivered;
+    private Ticket ticket = new Ticket();
 
     public void recordItem(ItemId itemId, Money price) {
-        total = price;
-    }
-
-    public void endItemRecords() {
-
+        ticket.recordItem(itemId, price);
     }
 
     public Money getTotal() {
-        return total;
+        return ticket.getTotal();
     }
 
     public void recordCashDelivered(Money cashDelivered) {
-        this.cashDelivered = cashDelivered;
+        ticket.recordCashDelivered(cashDelivered);
     }
 
     public Money getChange() {
-        return cashDelivered.minus(total);
+        return ticket.getChange();
     }
-
-    public void endShoppingTransaction() {
-    }
-
-    public boolean isReadyToRecordANewItem() {
-        return true;
-    }
-
 
     public CashRegisterId getCashRegisterId() {
         return new CashRegisterId(id);
     }
+
+
+    public void endItemRecords() { }
+    public boolean isReadyToRecordANewItem() {
+        return true;
+    }
+    public void endShoppingTransaction() {
+        ticket = new Ticket();
+    }
+
 }

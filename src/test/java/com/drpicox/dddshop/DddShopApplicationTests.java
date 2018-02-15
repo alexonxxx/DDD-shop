@@ -41,6 +41,7 @@ public class DddShopApplicationTests {
      CashDelivered: an amount of money delivered to satisfy a shopping transaction equals or greater than value
      Change: an amount of money to return one total is satisfied with cashDelivered
      EndShoppingTransaction: finishes the current transactions and makes the CashRegister ready for a new one
+     Ticket: document generated with one transaction details
     */
 	@Test
     public void sellOneItem() {
