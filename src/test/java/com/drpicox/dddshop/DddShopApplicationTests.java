@@ -42,6 +42,7 @@ public class DddShopApplicationTests {
      Change: an amount of money to return one total is satisfied with cashDelivered
      EndShoppingTransaction: finishes the current transactions and makes the CashRegister ready for a new one
      Ticket: document generated with one transaction details
+     TicketLine: each item registered in a ticket with its quantity, price when registered, etc...
     */
 	@Test
     public void sellOneItem() {

@@ -13,6 +13,9 @@ public class Money implements Serializable {
     public Money minus(Money other) {
         return new Money(this.quantity - other.quantity);
     }
+    public Money plus(Money other) {
+        return new Money(this.quantity + other.quantity);
+    }
 
     @Override
     public boolean equals(Object o) {
