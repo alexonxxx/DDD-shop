@@ -1,6 +1,9 @@
 package com.drpicox.dddshop.ticket;
 
+import com.drpicox.dddshop.cashregister.CashDeliveredRecorded;
+import com.drpicox.dddshop.cashregister.CashRegisterCreated;
 import com.drpicox.dddshop.cashregister.CashRegisterId;
+import com.drpicox.dddshop.cashregister.ItemRecorded;
 import com.drpicox.dddshop.item.ItemId;
 import com.drpicox.dddshop.shared.Money;
 
@@ -18,16 +21,16 @@ public class Ticket {
 
     private Money cashDelivered;
 
-    public Ticket(CashRegisterId cashRegisterId, Long ticketNumber) {
-        this.cashRegisterId = cashRegisterId;
-        this.ticketNumber = ticketNumber;
+    public Ticket(CashRegisterCreated cashRegisterCreated) {
+        this.cashRegisterId = cashRegisterCreated.getCashRegisterId();
+        this.ticketNumber = cashRegisterCreated.getCurrentTicketNumber();
     }
 
     @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<TicketLine> lines;
 
-    public void recordItem(ItemId itemId, Money price) {
-        lines.add(new TicketLine(price));
+    public void onItemRecorded(ItemRecorded itemRecorded) {
+        lines.add(new TicketLine(itemRecorded.getPrice()));
     }
 
     public Money getTotal() {
@@ -38,8 +41,8 @@ public class Ticket {
         return total;
     }
 
-    public void recordCashDelivered(Money cashDelivered) {
-        this.cashDelivered = cashDelivered;
+    public void onCashDeliveredRecorded(CashDeliveredRecorded cashDeliveredRecorded) {
+        this.cashDelivered = cashDeliveredRecorded.getCashDelivered();
     }
 
     public Money getChange() {

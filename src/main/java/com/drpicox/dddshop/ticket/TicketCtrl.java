@@ -2,9 +2,7 @@ package com.drpicox.dddshop.ticket;
 
 import com.drpicox.dddshop.cashregister.CashDeliveredRecorded;
 import com.drpicox.dddshop.cashregister.CashRegisterCreated;
-import com.drpicox.dddshop.cashregister.CashRegisterId;
 import com.drpicox.dddshop.cashregister.ItemRecorded;
-import com.drpicox.dddshop.item.ItemId;
 import com.drpicox.dddshop.shared.Money;
 import com.drpicox.queue.Queue;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,10 +28,7 @@ public class TicketCtrl {
     }
 
     public TicketId onCashRegisterCreated(CashRegisterCreated cashRegisterCreated) {
-        Ticket ticket = new Ticket(
-                cashRegisterCreated.getCashRegisterId(),
-                cashRegisterCreated.getCurrentTicketNumber()
-        );
+        Ticket ticket = new Ticket(cashRegisterCreated);
         save(ticket);
 
 
@@ -47,7 +42,7 @@ public class TicketCtrl {
                 itemRecorded.getCurrentTicketNumber()
         ));
 
-        ticket.recordItem(itemRecorded.getItemId(), itemRecorded.getPrice());
+        ticket.onItemRecorded(itemRecorded);
         save(ticket);
     }
 
@@ -61,7 +56,7 @@ public class TicketCtrl {
                 cashDeliveredRecorded.getCashRegisterId(),
                 cashDeliveredRecorded.getCurrentTicketNumber()
         ));
-        ticket.recordCashDelivered(cashDeliveredRecorded.getCashDelivered());
+        ticket.onCashDeliveredRecorded(cashDeliveredRecorded);
         save(ticket);
     }
 
