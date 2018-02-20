@@ -5,11 +5,15 @@ import com.drpicox.dddshop.item.ItemId;
 import com.drpicox.dddshop.shared.Money;
 import com.drpicox.dddshop.ticket.TicketCtrl;
 import com.drpicox.dddshop.ticket.TicketId;
+import com.drpicox.queue.Queue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class CashRegisterCtrl {
+
+    @Autowired
+    private Queue queue;
 
     @Autowired
     private ItemCtrl itemCtrl;
