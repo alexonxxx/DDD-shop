@@ -47,5 +47,9 @@ public class Ticket {
         return cashDelivered.minus(getTotal());
     }
 
+    public TicketId getTicketId() {
+        return new TicketId(cashRegisterId, ticketNumber);
+    }
+
     Ticket(){}
 }

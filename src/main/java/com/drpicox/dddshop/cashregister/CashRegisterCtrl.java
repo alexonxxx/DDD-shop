@@ -13,6 +13,9 @@ public class CashRegisterCtrl {
     private ItemCtrl itemCtrl;
 
     @Autowired
+    private TicketCtrl ticketCtrl;
+
+    @Autowired
     private CashRegisterRepository cashRegisterRepository;
 
     public CashRegisterId createCashRegister() {
@@ -23,15 +26,18 @@ public class CashRegisterCtrl {
         save(cashRegister);
 
         CashRegisterId cashRegisterId = cashRegister.getCashRegisterId();
+
+        ticketCtrl.createTicket(cashRegisterId, cashRegister.getCurrentTicketNumber());
+
         return cashRegisterId;
     }
 
     public void recordItem(CashRegisterId cashRegisterId, ItemId itemId) {
         CashRegister cashRegister = get(cashRegisterId);
         Money price = itemCtrl.getPrice(itemId);
+        TicketId ticketId = cashRegister.getTicketId();
 
-        cashRegister.recordItem(itemId, price);
-        save(cashRegister);
+        ticketCtrl.recordItem(ticketId, itemId, price);
     }
 
     public void endItemRecords(CashRegisterId cashRegisterId) {
@@ -42,18 +48,23 @@ public class CashRegisterCtrl {
 
     public Money getTotal(CashRegisterId cashRegisterId) {
         CashRegister cashRegister = get(cashRegisterId);
-        return cashRegister.getTotal();
+        TicketId ticketId = cashRegister.getTicketId();
+
+        return ticketCtrl.getTotal(ticketId);
     }
 
     public void recordCashDelivered(CashRegisterId cashRegisterId, Money cashDelivered) {
         CashRegister cashRegister = get(cashRegisterId);
-        cashRegister.recordCashDelivered(cashDelivered);
-        save(cashRegister);
+        TicketId ticketId = cashRegister.getTicketId();
+
+        ticketCtrl.recordCashDelivered(ticketId, cashDelivered);
     }
 
     public Money getChange(CashRegisterId cashRegisterId) {
         CashRegister cashRegister = get(cashRegisterId);
-        return cashRegister.getChange();
+        TicketId ticketId = cashRegister.getTicketId();
+
+        return ticketCtrl.getChange(ticketId);
     }
 
     public void endShoppingTransaction(CashRegisterId cashRegisterId) {

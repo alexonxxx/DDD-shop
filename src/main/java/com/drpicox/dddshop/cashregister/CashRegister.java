@@ -12,39 +12,19 @@ public class CashRegister {
     @GeneratedValue
     private Long id;
 
-    @OneToOne(cascade= CascadeType.ALL)
-    private Ticket ticket;
-
-    private Long nextTicketNumber = 0L;
+    private Long currentTicketNumber = 0L;
 
 
     public void startTransaction() {
-        nextTicketNumber++;
-        ticket = new Ticket(getCashRegisterId(), nextTicketNumber);
+        currentTicketNumber++;
     }
 
-    public void recordItem(ItemId itemId, Money price) {
-        ticket.recordItem(itemId, price);
-    }
-
-    public Money getTotal() {
-        return ticket.getTotal();
-    }
-
-    public void recordCashDelivered(Money cashDelivered) {
-        ticket.recordCashDelivered(cashDelivered);
-    }
-
-    public Money getChange() {
-        return ticket.getChange();
+    public TicketId getTicketId() {
+        return new TicketId(getCashRegisterId(), currentTicketNumber);
     }
 
     public CashRegisterId getCashRegisterId() {
         return new CashRegisterId(id);
-    }
-
-    public Ticket getTicket() {
-        return ticket;
     }
 
     public void endItemRecords() { }
@@ -53,5 +33,9 @@ public class CashRegister {
     }
     public void endShoppingTransaction() {
         startTransaction();
+    }
+
+    public Long getCurrentTicketNumber() {
+        return currentTicketNumber;
     }
 }
