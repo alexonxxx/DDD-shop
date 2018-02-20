@@ -3,6 +3,8 @@ package com.drpicox.dddshop.cashregister;
 import com.drpicox.dddshop.item.ItemCtrl;
 import com.drpicox.dddshop.item.ItemId;
 import com.drpicox.dddshop.shared.Money;
+import com.drpicox.dddshop.ticket.TicketCtrl;
+import com.drpicox.dddshop.ticket.TicketId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 

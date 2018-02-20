@@ -1,7 +1,6 @@
 package com.drpicox.dddshop.cashregister;
 
-import com.drpicox.dddshop.item.ItemId;
-import com.drpicox.dddshop.shared.Money;
+import com.drpicox.dddshop.ticket.TicketId;
 
 import javax.persistence.*;
 

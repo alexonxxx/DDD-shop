@@ -1,11 +1,10 @@
-package com.drpicox.dddshop.cashregister;
+package com.drpicox.dddshop.ticket;
 
+import com.drpicox.dddshop.cashregister.CashRegisterId;
 import com.drpicox.dddshop.item.ItemId;
 import com.drpicox.dddshop.shared.Money;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity

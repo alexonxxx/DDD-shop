@@ -1,4 +1,4 @@
-package com.drpicox.dddshop.cashregister;
+package com.drpicox.dddshop.ticket;
 
 import com.drpicox.dddshop.shared.Money;
 

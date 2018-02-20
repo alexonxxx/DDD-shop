@@ -1,6 +1,6 @@
-package com.drpicox.dddshop.cashregister;
+package com.drpicox.dddshop.ticket;
 
-import com.drpicox.dddshop.item.ItemCtrl;
+import com.drpicox.dddshop.cashregister.CashRegisterId;
 import com.drpicox.dddshop.item.ItemId;
 import com.drpicox.dddshop.shared.Money;
 import org.springframework.beans.factory.annotation.Autowired;
