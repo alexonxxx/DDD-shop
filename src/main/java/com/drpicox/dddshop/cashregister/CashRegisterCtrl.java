@@ -32,6 +32,7 @@ public class CashRegisterCtrl {
         save(cashRegister);
 
         CashRegisterId cashRegisterId = cashRegister.getCashRegisterId();
+        queue.send(new CashRegisterCreated(cashRegisterId, cashRegister.getCurrentTicketNumber()));
 
         ticketCtrl.createTicket(cashRegisterId, cashRegister.getCurrentTicketNumber());
 
@@ -41,6 +42,8 @@ public class CashRegisterCtrl {
     public void recordItem(CashRegisterId cashRegisterId, ItemId itemId) {
         CashRegister cashRegister = get(cashRegisterId);
         Money price = itemCtrl.getPrice(itemId);
+        queue.send(new ItemRecorded(cashRegisterId, cashRegister.getCurrentTicketNumber(), itemId, price));
+
         TicketId ticketId = cashRegister.getTicketId();
 
         ticketCtrl.recordItem(ticketId, itemId, price);
@@ -50,6 +53,7 @@ public class CashRegisterCtrl {
         CashRegister cashRegister = get(cashRegisterId);
         cashRegister.endItemRecords();
         save(cashRegister);
+        queue.send(new ItemRecordsEnded(cashRegisterId, cashRegister.getCurrentTicketNumber()));
     }
 
     public Money getTotal(CashRegisterId cashRegisterId) {
@@ -62,6 +66,7 @@ public class CashRegisterCtrl {
     public void recordCashDelivered(CashRegisterId cashRegisterId, Money cashDelivered) {
         CashRegister cashRegister = get(cashRegisterId);
         TicketId ticketId = cashRegister.getTicketId();
+        queue.send(new CashDeliveredRecorded(cashRegisterId, cashRegister.getCurrentTicketNumber(), cashDelivered));
 
         ticketCtrl.recordCashDelivered(ticketId, cashDelivered);
     }
@@ -75,8 +80,10 @@ public class CashRegisterCtrl {
 
     public void endShoppingTransaction(CashRegisterId cashRegisterId) {
         CashRegister cashRegister = get(cashRegisterId);
+        Long currentTicketNumber = cashRegister.getCurrentTicketNumber();
         cashRegister.endShoppingTransaction();
         save(cashRegister);
+        queue.send(new ShoppingTransactionEnded(cashRegisterId, currentTicketNumber, cashRegister.getCurrentTicketNumber()));
     }
 
     public boolean isReadyToRecordANewItem(CashRegisterId cashRegisterId) {

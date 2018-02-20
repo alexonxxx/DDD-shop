@@ -1,6 +1,8 @@
 package com.drpicox.dddshop.item;
 
-public class ItemId {
+import java.io.Serializable;
+
+public class ItemId implements Serializable {
 
     private Long id;
 
