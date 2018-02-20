@@ -16,15 +16,9 @@ public class TicketCtrl {
 
     @Autowired
     private void receiveMessages(Queue queue) {
-        queue.receive(CashRegisterCreated.class, (cashRegisterCreated) -> {
-            this.onCashRegisterCreated(cashRegisterCreated);
-        });
-        queue.receive(ItemRecorded.class, (itemRecorded) -> {
-            this.onItemRecorded(itemRecorded);
-        });
-        queue.receive(CashDeliveredRecorded.class, (cashDeliveredRecorded) -> {
-            this.onCashDeliveredRecorded(cashDeliveredRecorded);
-        });
+        queue.receive(CashRegisterCreated.class, this::onCashRegisterCreated);
+        queue.receive(ItemRecorded.class, this::onItemRecorded);
+        queue.receive(CashDeliveredRecorded.class, this::onCashDeliveredRecorded);
     }
 
     public TicketId onCashRegisterCreated(CashRegisterCreated cashRegisterCreated) {
