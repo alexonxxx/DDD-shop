@@ -19,18 +19,21 @@ public class TicketCtrl {
     @Autowired
     private void receiveMessages(Queue queue) {
         queue.receive(CashRegisterCreated.class, (cashRegisterCreated) -> {
-            this.createTicket(cashRegisterCreated.getCashRegisterId(), cashRegisterCreated.getCurrentTicketNumber());
+            this.onCashRegisterCreated(cashRegisterCreated);
         });
         queue.receive(ItemRecorded.class, (itemRecorded) -> {
-            this.recordItem(itemRecorded.getCashRegisterId(), itemRecorded.getCurrentTicketNumber(), itemRecorded.getItemId(), itemRecorded.getPrice());
+            this.onItemRecorded(itemRecorded);
         });
         queue.receive(CashDeliveredRecorded.class, (cashDeliveredRecorded) -> {
-            this.recordCashDelivered(cashDeliveredRecorded.getCashRegisterId(), cashDeliveredRecorded.getCurrentTicketNumber(), cashDeliveredRecorded.getCashDelivered());
+            this.onCashDeliveredRecorded(cashDeliveredRecorded);
         });
     }
 
-    public TicketId createTicket(CashRegisterId cashRegisterId, Long ticketNumber) {
-        Ticket ticket = new Ticket(cashRegisterId, ticketNumber);
+    public TicketId onCashRegisterCreated(CashRegisterCreated cashRegisterCreated) {
+        Ticket ticket = new Ticket(
+                cashRegisterCreated.getCashRegisterId(),
+                cashRegisterCreated.getCurrentTicketNumber()
+        );
         save(ticket);
 
 
@@ -38,10 +41,13 @@ public class TicketCtrl {
         return ticketId;
     }
 
-    public void recordItem(CashRegisterId cashRegisterId, Long ticketNumber, ItemId itemId, Money price) {
-        Ticket ticket = get(new TicketId(cashRegisterId, ticketNumber));
+    public void onItemRecorded(ItemRecorded itemRecorded) {
+        Ticket ticket = get(new TicketId(
+                itemRecorded.getCashRegisterId(),
+                itemRecorded.getCurrentTicketNumber()
+        ));
 
-        ticket.recordItem(itemId, price);
+        ticket.recordItem(itemRecorded.getItemId(), itemRecorded.getPrice());
         save(ticket);
     }
 
@@ -50,9 +56,12 @@ public class TicketCtrl {
         return ticket.getTotal();
     }
 
-    public void recordCashDelivered(CashRegisterId cashRegisterId, Long ticketNumber, Money cashDelivered) {
-        Ticket ticket = get(new TicketId(cashRegisterId, ticketNumber));
-        ticket.recordCashDelivered(cashDelivered);
+    public void onCashDeliveredRecorded(CashDeliveredRecorded cashDeliveredRecorded) {
+        Ticket ticket = get(new TicketId(
+                cashDeliveredRecorded.getCashRegisterId(),
+                cashDeliveredRecorded.getCurrentTicketNumber()
+        ));
+        ticket.recordCashDelivered(cashDeliveredRecorded.getCashDelivered());
         save(ticket);
     }
 
