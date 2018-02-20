@@ -5,6 +5,7 @@ import com.drpicox.dddshop.cashregister.CashRegisterId;
 import com.drpicox.dddshop.shared.Money;
 import com.drpicox.dddshop.item.ItemCtrl;
 import com.drpicox.dddshop.item.ItemId;
+import com.drpicox.queue.Queue;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +18,9 @@ import static org.junit.Assert.assertEquals;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class DddShopApplicationTests {
+
+    @Autowired
+    private Queue queue;
 
     @Autowired
     private ItemCtrl itemCtrl;
@@ -77,6 +81,7 @@ public class DddShopApplicationTests {
 
     private void recordCashDeliveredAtCashRegister(Money cashDelivered, CashRegisterId cashRegisterId) {
         cashRegisterCtrl.recordCashDelivered(cashRegisterId, cashDelivered);
+        queue.deliverMessages();
     }
 
     private Money getCashRegisterTotal(CashRegisterId cashRegisterId) {
@@ -93,14 +98,19 @@ public class DddShopApplicationTests {
 
     private void recordItemAtCashRegister(ItemId itemId, CashRegisterId cashRegisterId) {
         cashRegisterCtrl.recordItem(cashRegisterId, itemId);
+        queue.deliverMessages();
     }
 
     public ItemId getItemWithPriceInMoney() {
-	    return itemCtrl.createItem(new Money(17));
+	    ItemId itemId = itemCtrl.createItem(new Money(17));
+	    queue.deliverMessages();
+	    return itemId;
     }
 
     public CashRegisterId getCashRegister() {
-        return cashRegisterCtrl.createCashRegister();
+        CashRegisterId cashRegisterId = cashRegisterCtrl.createCashRegister();
+        queue.deliverMessages();
+        return cashRegisterId;
     }
 
     public Money getCashDeliveredByCustomer() {

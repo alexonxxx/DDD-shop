@@ -34,8 +34,6 @@ public class CashRegisterCtrl {
         CashRegisterId cashRegisterId = cashRegister.getCashRegisterId();
         queue.send(new CashRegisterCreated(cashRegisterId, cashRegister.getCurrentTicketNumber()));
 
-        ticketCtrl.createTicket(cashRegisterId, cashRegister.getCurrentTicketNumber());
-
         return cashRegisterId;
     }
 
@@ -43,10 +41,6 @@ public class CashRegisterCtrl {
         CashRegister cashRegister = get(cashRegisterId);
         Money price = itemCtrl.getPrice(itemId);
         queue.send(new ItemRecorded(cashRegisterId, cashRegister.getCurrentTicketNumber(), itemId, price));
-
-        TicketId ticketId = cashRegister.getTicketId();
-
-        ticketCtrl.recordItem(ticketId, itemId, price);
     }
 
     public void endItemRecords(CashRegisterId cashRegisterId) {
@@ -67,8 +61,6 @@ public class CashRegisterCtrl {
         CashRegister cashRegister = get(cashRegisterId);
         TicketId ticketId = cashRegister.getTicketId();
         queue.send(new CashDeliveredRecorded(cashRegisterId, cashRegister.getCurrentTicketNumber(), cashDelivered));
-
-        ticketCtrl.recordCashDelivered(ticketId, cashDelivered);
     }
 
     public Money getChange(CashRegisterId cashRegisterId) {
