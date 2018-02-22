@@ -1,6 +1,7 @@
 package com.drpicox.dddshop.item;
 
 import com.drpicox.dddshop.shared.Money;
+import com.drpicox.queue.Queue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -11,6 +12,9 @@ import java.util.Map;
 public class ItemCtrl {
 
     @Autowired
+    private Queue queue;
+
+    @Autowired
     private ItemRepository itemRepository;
 
     private Map<ItemId, Item> items = new HashMap<>();
@@ -19,7 +23,9 @@ public class ItemCtrl {
         Item item = new Item(money);
         save(item);
 
+
         ItemId itemId = item.getItemId();
+        queue.send(new ItemCreated(itemId, money));
         return itemId;
     }
 
