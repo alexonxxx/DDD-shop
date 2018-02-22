@@ -15,12 +15,4 @@ public class ItemRecordsEnded implements Serializable {
         this.cashRegisterId = cashRegisterId;
         this.currentTicketNumber = currentTicketNumber;
     }
-
-    public CashRegisterId getCashRegisterId() {
-        return cashRegisterId;
-    }
-
-    public Long getCurrentTicketNumber() {
-        return currentTicketNumber;
-    }
 }

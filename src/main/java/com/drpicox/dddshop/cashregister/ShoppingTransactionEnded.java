@@ -15,15 +15,4 @@ public class ShoppingTransactionEnded implements Serializable {
         this.nextTicketNumber = nextTicketNumber;
     }
 
-    public CashRegisterId getCashRegisterId() {
-        return cashRegisterId;
-    }
-
-    public Long getCurrentTicketNumber() {
-        return currentTicketNumber;
-    }
-
-    public Long getNextTicketNumber() {
-        return nextTicketNumber;
-    }
 }

@@ -28,10 +28,6 @@ public class ItemRecorded implements Serializable {
         return currentTicketNumber;
     }
 
-    public ItemId getItemId() {
-        return itemId;
-    }
-
     public Money getPrice() {
         return price;
     }

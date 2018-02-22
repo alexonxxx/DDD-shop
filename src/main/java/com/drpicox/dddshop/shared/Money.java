@@ -24,9 +24,4 @@ public class Money implements Serializable {
         Money money = (Money) o;
         return quantity == money.quantity;
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(quantity);
-    }
 }

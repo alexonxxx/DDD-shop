@@ -12,12 +12,4 @@ public class ItemCreated implements Serializable {
         this.itemId = itemId;
         this.money = money;
     }
-
-    public ItemId getItemId() {
-        return itemId;
-    }
-
-    public Money getMoney() {
-        return money;
-    }
 }

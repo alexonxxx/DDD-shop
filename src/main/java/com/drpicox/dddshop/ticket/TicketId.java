@@ -15,19 +15,5 @@ public class TicketId implements Serializable {
         this.ticketNumber = ticketNumber;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        TicketId ticketId = (TicketId) o;
-        return Objects.equals(cashRegisterId, ticketId.cashRegisterId) &&
-                Objects.equals(ticketNumber, ticketId.ticketNumber);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(cashRegisterId, ticketNumber);
-    }
-
     TicketId(){}
 }

@@ -13,10 +13,4 @@ public class CashRegisterId implements Serializable {
         return id;
     }
 
-    @Override
-    public String toString() {
-        return "CashRegisterId{" +
-                "id=" + id +
-                '}';
-    }
 }
