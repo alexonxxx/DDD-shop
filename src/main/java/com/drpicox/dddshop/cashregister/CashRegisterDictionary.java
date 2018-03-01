@@ -58,6 +58,14 @@ public class CashRegisterDictionary {
         return event;
     }
 
+    public CashDeliveredRecorded recordCashDelivered(CashRegisterId cashRegisterId, Money cashDelivered) {
+        CashRegister cashRegister = get(cashRegisterId);
+        CashDeliveredRecorded event = new CashDeliveredRecorded(cashRegisterId, cashRegister.getCurrentTicketNumber(), cashDelivered);
+
+        apply(event);
+        return event;
+    }
+
     private CashRegister get(CashRegisterId cashRegisterId) {
         return cashRegisters.get(cashRegisterId);
     }

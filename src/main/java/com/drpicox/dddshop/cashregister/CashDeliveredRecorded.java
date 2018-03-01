@@ -34,4 +34,6 @@ public class CashDeliveredRecorded extends CashRegisterEvent {
     public Money getCashDelivered() {
         return cashDelivered;
     }
+
+    CashDeliveredRecorded() {}
 }

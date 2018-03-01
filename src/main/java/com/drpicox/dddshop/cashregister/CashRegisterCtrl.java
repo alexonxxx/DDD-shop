@@ -54,7 +54,7 @@ public class CashRegisterCtrl {
         CashRegister cashRegister = get(cashRegisterId);
         cashRegister.endItemRecords();
         save(cashRegister);
-        
+
         saveAndSend(itemRecordsEnded);
     }
 
@@ -66,9 +66,8 @@ public class CashRegisterCtrl {
     }
 
     public void recordCashDelivered(CashRegisterId cashRegisterId, Money cashDelivered) {
-        CashRegister cashRegister = get(cashRegisterId);
-        TicketId ticketId = cashRegister.getTicketId();
-        saveAndSend(new CashDeliveredRecorded(cashRegisterId, cashRegister.getCurrentTicketNumber(), cashDelivered));
+        CashDeliveredRecorded cashDeliveredRecorded = getDictionary().recordCashDelivered(cashRegisterId, cashDelivered);
+        saveAndSend(cashDeliveredRecorded);
     }
 
     public Money getChange(CashRegisterId cashRegisterId) {
