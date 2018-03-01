@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Entity
 @DiscriminatorValue(value = "ShoppingTransactionEnded")
-public class ShoppingTransactionEnded extends Event {
+public class ShoppingTransactionEnded extends CashRegisterEvent {
 
     private CashRegisterId cashRegisterId;
     private Long currentTicketNumber;
@@ -16,7 +16,6 @@ public class ShoppingTransactionEnded extends Event {
 
 
     public ShoppingTransactionEnded(CashRegisterId cashRegisterId, Long currentTicketNumber, Long nextTicketNumber) {
-        super("cashregister");
         this.cashRegisterId = cashRegisterId;
         this.currentTicketNumber = currentTicketNumber;
         this.nextTicketNumber = nextTicketNumber;
