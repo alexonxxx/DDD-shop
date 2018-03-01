@@ -82,7 +82,7 @@ public class CashRegisterDictionary {
         nextCashRegisterId = Math.min(cashRegisterCreated.getCashRegisterId().getId() + 1, nextCashRegisterId);
 
         CashRegister cashRegister = new CashRegister(cashRegisterCreated);
-        cashRegisters.put(cashRegister.getCashRegisterId(), cashRegister);
+        cashRegisters.put(cashRegister.getId(), cashRegister);
     }
 
     private void on(CashDeliveredRecorded cashDeliveredRecorded) {

@@ -2,16 +2,14 @@ package com.drpicox.dddshop.cashregister;
 
 import com.drpicox.dddshop.ticket.TicketId;
 
-import javax.persistence.*;
-
 public class CashRegister {
 
-    private Long id;
+    private CashRegisterId id;
     private Long currentTicketNumber;
 
 
     public CashRegister(CashRegisterCreated cashRegisterCreated) {
-        this.id = cashRegisterCreated.getCashRegisterId().getId();
+        this.id = cashRegisterCreated.getCashRegisterId();
         this.currentTicketNumber = cashRegisterCreated.getCurrentTicketNumber();
     }
 
@@ -21,11 +19,11 @@ public class CashRegister {
     }
 
     public TicketId getTicketId() {
-        return new TicketId(getCashRegisterId(), currentTicketNumber);
+        return new TicketId(id, currentTicketNumber);
     }
 
-    public CashRegisterId getCashRegisterId() {
-        return new CashRegisterId(id);
+    public CashRegisterId getId() {
+        return id;
     }
 
     public void endItemRecords() { }
