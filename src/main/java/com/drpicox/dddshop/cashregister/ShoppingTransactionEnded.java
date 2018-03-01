@@ -24,4 +24,6 @@ public class ShoppingTransactionEnded extends CashRegisterEvent {
     public CashRegisterId getCashRegisterId() {
         return cashRegisterId;
     }
+
+    ShoppingTransactionEnded(){}
 }

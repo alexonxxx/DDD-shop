@@ -74,7 +74,7 @@ public class CashRegisterDictionary {
         return event;
     }
 
-    private CashRegister get(CashRegisterId cashRegisterId) {
+    public CashRegister get(CashRegisterId cashRegisterId) {
         return cashRegisters.get(cashRegisterId);
     }
 

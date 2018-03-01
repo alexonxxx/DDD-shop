@@ -93,7 +93,7 @@ public class CashRegisterCtrl {
     }
 
     private CashRegister get(CashRegisterId cashRegisterId) {
-        return cashRegisterRepository.findOne(cashRegisterId.getId());
+        return getDictionary().get(cashRegisterId);
     }
 
     private CashRegisterDictionary getDictionary() {
