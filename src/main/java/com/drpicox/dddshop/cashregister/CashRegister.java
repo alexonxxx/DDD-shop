@@ -4,10 +4,8 @@ import com.drpicox.dddshop.ticket.TicketId;
 
 import javax.persistence.*;
 
-@Entity
 public class CashRegister {
 
-    @Id
     private Long id;
     private Long currentTicketNumber;
 

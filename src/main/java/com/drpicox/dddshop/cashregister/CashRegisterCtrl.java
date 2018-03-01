@@ -26,18 +26,12 @@ public class CashRegisterCtrl {
     private TicketCtrl ticketCtrl;
 
     @Autowired
-    private CashRegisterRepository cashRegisterRepository;
-
-    @Autowired
     private EventRepository eventRepository;
 
     public CashRegisterId createCashRegister() {
         CashRegisterCreated cashRegisterCreated = getDictionary().createCashRegister();
 
-        CashRegister cashRegister = new CashRegister(cashRegisterCreated);
-        save(cashRegister);
         saveAndSend(cashRegisterCreated);
-
         return cashRegisterCreated.getCashRegisterId();
     }
 
@@ -51,10 +45,6 @@ public class CashRegisterCtrl {
     public void endItemRecords(CashRegisterId cashRegisterId) {
         ItemRecordsEnded itemRecordsEnded = getDictionary().endItemRecords(cashRegisterId);
 
-        CashRegister cashRegister = get(cashRegisterId);
-        cashRegister.endItemRecords();
-        save(cashRegister);
-
         saveAndSend(itemRecordsEnded);
     }
 
@@ -67,6 +57,7 @@ public class CashRegisterCtrl {
 
     public void recordCashDelivered(CashRegisterId cashRegisterId, Money cashDelivered) {
         CashDeliveredRecorded cashDeliveredRecorded = getDictionary().recordCashDelivered(cashRegisterId, cashDelivered);
+
         saveAndSend(cashDeliveredRecorded);
     }
 
@@ -79,10 +70,6 @@ public class CashRegisterCtrl {
 
     public void endShoppingTransaction(CashRegisterId cashRegisterId) {
         ShoppingTransactionEnded shoppingTransactionEnded = getDictionary().endShoppingTransaction(cashRegisterId);
-
-        CashRegister cashRegister = get(cashRegisterId);
-        cashRegister.endShoppingTransaction(shoppingTransactionEnded);
-        save(cashRegister);
 
         saveAndSend(shoppingTransactionEnded);
     }
@@ -105,9 +92,6 @@ public class CashRegisterCtrl {
         return dictionary;
     }
 
-    private void save(CashRegister cashRegister) {
-        cashRegisterRepository.save(cashRegister);
-    }
     private void saveAndSend(Event event) {
         eventRepository.save(event);
         queue.send(event);
