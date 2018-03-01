@@ -11,6 +11,10 @@ public class CashRegister {
     @GeneratedValue
     private Long id;
 
+    public CashRegister(CashRegisterCreated cashRegisterCreated) {
+        this.id = cashRegisterCreated.getCashRegisterId().getId();
+    }
+
     private Long currentTicketNumber = 0L;
 
 
@@ -37,4 +41,6 @@ public class CashRegister {
     public Long getCurrentTicketNumber() {
         return currentTicketNumber;
     }
+
+    CashRegister() {}
 }

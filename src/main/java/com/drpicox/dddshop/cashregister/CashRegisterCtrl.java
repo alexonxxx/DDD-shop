@@ -11,6 +11,8 @@ import com.drpicox.queue.Queue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class CashRegisterCtrl {
 
@@ -30,6 +32,9 @@ public class CashRegisterCtrl {
     private EventRepository eventRepository;
 
     public CashRegisterId createCashRegister() {
+        Event cashRegisterCreated = getDictionary().createCashRegister();
+
+
         CashRegister cashRegister = new CashRegister();
         save(cashRegister);
 
@@ -90,6 +95,15 @@ public class CashRegisterCtrl {
 
     private CashRegister get(CashRegisterId cashRegisterId) {
         return cashRegisterRepository.findOne(cashRegisterId.getId());
+    }
+
+    private CashRegisterDictionary getDictionary() {
+        List<Event> events = eventRepository.findByAggregateOrderBySequenceNumberAsc("cashregister");
+
+        CashRegisterDictionary dictionary = new CashRegisterDictionary();
+        dictionary.apply(events);
+
+        return dictionary;
     }
 
     private void save(CashRegister cashRegister) {
