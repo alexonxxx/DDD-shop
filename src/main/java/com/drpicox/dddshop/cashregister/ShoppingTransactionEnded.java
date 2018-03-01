@@ -21,4 +21,7 @@ public class ShoppingTransactionEnded extends CashRegisterEvent {
         this.nextTicketNumber = nextTicketNumber;
     }
 
+    public CashRegisterId getCashRegisterId() {
+        return cashRegisterId;
+    }
 }

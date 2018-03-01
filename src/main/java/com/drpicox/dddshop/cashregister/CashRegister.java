@@ -34,12 +34,18 @@ public class CashRegister {
     public boolean isReadyToRecordANewItem() {
         return true;
     }
-    public void endShoppingTransaction() {
+    public void endShoppingTransaction(ShoppingTransactionEnded shoppingTransactionEnded) {
         startTransaction();
     }
 
     public Long getCurrentTicketNumber() {
         return currentTicketNumber;
+    }
+
+
+
+    public Long getNextTicketNumber() {
+        return currentTicketNumber + 1;
     }
 
     CashRegister() {}

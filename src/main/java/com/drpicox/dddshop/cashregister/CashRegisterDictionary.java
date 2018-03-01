@@ -66,6 +66,14 @@ public class CashRegisterDictionary {
         return event;
     }
 
+    public ShoppingTransactionEnded endShoppingTransaction(CashRegisterId cashRegisterId) {
+        CashRegister cashRegister = get(cashRegisterId);
+        ShoppingTransactionEnded event = new ShoppingTransactionEnded(cashRegisterId, cashRegister.getCurrentTicketNumber(), cashRegister.getNextTicketNumber());
+
+        apply(event);
+        return event;
+    }
+
     private CashRegister get(CashRegisterId cashRegisterId) {
         return cashRegisters.get(cashRegisterId);
     }
@@ -88,5 +96,6 @@ public class CashRegisterDictionary {
     }
 
     private void on(ShoppingTransactionEnded shoppingTransactionEnded) {
+        get(shoppingTransactionEnded.getCashRegisterId()).endShoppingTransaction(shoppingTransactionEnded);
     }
 }

@@ -78,11 +78,13 @@ public class CashRegisterCtrl {
     }
 
     public void endShoppingTransaction(CashRegisterId cashRegisterId) {
+        ShoppingTransactionEnded shoppingTransactionEnded = getDictionary().endShoppingTransaction(cashRegisterId);
+
         CashRegister cashRegister = get(cashRegisterId);
-        Long currentTicketNumber = cashRegister.getCurrentTicketNumber();
-        cashRegister.endShoppingTransaction();
+        cashRegister.endShoppingTransaction(shoppingTransactionEnded);
         save(cashRegister);
-        saveAndSend(new ShoppingTransactionEnded(cashRegisterId, currentTicketNumber, cashRegister.getCurrentTicketNumber()));
+
+        saveAndSend(shoppingTransactionEnded);
     }
 
     public boolean isReadyToRecordANewItem(CashRegisterId cashRegisterId) {
