@@ -8,14 +8,14 @@ import javax.persistence.*;
 public class CashRegister {
 
     @Id
-    @GeneratedValue
     private Long id;
+    private Long currentTicketNumber;
+
 
     public CashRegister(CashRegisterCreated cashRegisterCreated) {
         this.id = cashRegisterCreated.getCashRegisterId().getId();
+        this.currentTicketNumber = cashRegisterCreated.getCurrentTicketNumber();
     }
-
-    private Long currentTicketNumber = 0L;
 
 
     public void startTransaction() {
@@ -43,4 +43,12 @@ public class CashRegister {
     }
 
     CashRegister() {}
+
+    @Override
+    public String toString() {
+        return "CashRegister{" +
+                "id=" + id +
+                ", currentTicketNumber=" + currentTicketNumber +
+                '}';
+    }
 }

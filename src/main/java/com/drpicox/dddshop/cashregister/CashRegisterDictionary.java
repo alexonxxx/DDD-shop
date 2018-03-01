@@ -34,7 +34,7 @@ public class CashRegisterDictionary {
 
     public CashRegisterCreated createCashRegister() {
         CashRegisterId cashRegisterId = new CashRegisterId(nextCashRegisterId);
-        CashRegisterCreated event = new CashRegisterCreated(cashRegisterId, 0L);
+        CashRegisterCreated event = new CashRegisterCreated(cashRegisterId, 1L);
         apply(event);
         return event;
     }

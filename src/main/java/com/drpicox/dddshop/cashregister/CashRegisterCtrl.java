@@ -32,19 +32,13 @@ public class CashRegisterCtrl {
     private EventRepository eventRepository;
 
     public CashRegisterId createCashRegister() {
-        Event cashRegisterCreated = getDictionary().createCashRegister();
+        CashRegisterCreated cashRegisterCreated = getDictionary().createCashRegister();
 
-
-        CashRegister cashRegister = new CashRegister();
+        CashRegister cashRegister = new CashRegister(cashRegisterCreated);
         save(cashRegister);
+        saveAndSend(cashRegisterCreated);
 
-        cashRegister.startTransaction();
-        save(cashRegister);
-
-        CashRegisterId cashRegisterId = cashRegister.getCashRegisterId();
-        saveAndSend(new CashRegisterCreated(cashRegisterId, cashRegister.getCurrentTicketNumber()));
-
-        return cashRegisterId;
+        return cashRegisterCreated.getCashRegisterId();
     }
 
     public void recordItem(CashRegisterId cashRegisterId, ItemId itemId) {
