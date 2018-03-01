@@ -20,4 +20,10 @@ public class ItemRecordsEnded extends CashRegisterEvent {
         this.cashRegisterId = cashRegisterId;
         this.currentTicketNumber = currentTicketNumber;
     }
+
+    public CashRegisterId getCashRegisterId() {
+        return cashRegisterId;
+    }
+
+    ItemRecordsEnded(){}
 }

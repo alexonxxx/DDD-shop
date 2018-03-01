@@ -49,10 +49,13 @@ public class CashRegisterCtrl {
     }
 
     public void endItemRecords(CashRegisterId cashRegisterId) {
+        ItemRecordsEnded itemRecordsEnded = getDictionary().endItemRecords(cashRegisterId);
+
         CashRegister cashRegister = get(cashRegisterId);
         cashRegister.endItemRecords();
         save(cashRegister);
-        saveAndSend(new ItemRecordsEnded(cashRegisterId, cashRegister.getCurrentTicketNumber()));
+        
+        saveAndSend(itemRecordsEnded);
     }
 
     public Money getTotal(CashRegisterId cashRegisterId) {

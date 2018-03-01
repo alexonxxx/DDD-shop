@@ -36,4 +36,7 @@ public class ItemRecorded extends CashRegisterEvent {
     public Money getPrice() {
         return price;
     }
+
+    ItemRecorded(){}
+
 }
