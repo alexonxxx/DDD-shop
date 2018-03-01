@@ -1,5 +1,6 @@
 package com.drpicox.dddshop.cashregister;
 
+import com.drpicox.dddshop.EventProcessor;
 import com.drpicox.dddshop.events.Event;
 import com.drpicox.dddshop.item.ItemId;
 import com.drpicox.dddshop.shared.Money;
@@ -9,29 +10,17 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CashRegisterDictionary {
+public class CashRegisterDictionary extends EventProcessor {
 
     private long nextCashRegisterId = 0;
     private Map<CashRegisterId, CashRegister> cashRegisters = new HashMap<CashRegisterId, CashRegister>();
 
-    private Queue fakeQueue;
-
     CashRegisterDictionary() {
-        fakeQueue = new Queue();
-        fakeQueue.receive(CashDeliveredRecorded.class, this::on);
-        fakeQueue.receive(CashRegisterCreated.class, this::on);
-        fakeQueue.receive(ItemRecorded.class, this::on);
-        fakeQueue.receive(ItemRecordsEnded.class, this::on);
-        fakeQueue.receive(ShoppingTransactionEnded.class, this::on);
-    }
-
-    public void apply(List<Event> events) {
-        events.forEach(event -> this.apply(event));
-    }
-
-    public void apply(Event event) {
-        fakeQueue.send(event);
-        fakeQueue.deliverMessages();
+        register(CashDeliveredRecorded.class, this::on);
+        register(CashRegisterCreated.class, this::on);
+        register(ItemRecorded.class, this::on);
+        register(ItemRecordsEnded.class, this::on);
+        register(ShoppingTransactionEnded.class, this::on);
     }
 
     public CashRegisterCreated createCashRegister() {
