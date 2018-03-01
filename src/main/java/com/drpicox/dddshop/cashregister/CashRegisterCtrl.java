@@ -42,9 +42,10 @@ public class CashRegisterCtrl {
     }
 
     public void recordItem(CashRegisterId cashRegisterId, ItemId itemId) {
-        CashRegister cashRegister = get(cashRegisterId);
         Money price = itemCtrl.getPrice(itemId);
-        saveAndSend(new ItemRecorded(cashRegisterId, cashRegister.getCurrentTicketNumber(), itemId, price));
+        ItemRecorded itemRecorded = getDictionary().recordItem(cashRegisterId, itemId, price);
+
+        saveAndSend(itemRecorded);
     }
 
     public void endItemRecords(CashRegisterId cashRegisterId) {

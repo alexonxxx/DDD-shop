@@ -25,4 +25,6 @@ public class CashRegisterCreated extends CashRegisterEvent {
     public Long getCurrentTicketNumber() {
         return currentTicketNumber;
     }
+
+    CashRegisterCreated(){}
 }

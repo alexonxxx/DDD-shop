@@ -1,6 +1,8 @@
 package com.drpicox.dddshop.cashregister;
 
 import com.drpicox.dddshop.events.Event;
+import com.drpicox.dddshop.item.ItemId;
+import com.drpicox.dddshop.shared.Money;
 import com.drpicox.queue.Queue;
 
 import java.util.HashMap;
@@ -35,8 +37,21 @@ public class CashRegisterDictionary {
     public CashRegisterCreated createCashRegister() {
         CashRegisterId cashRegisterId = new CashRegisterId(nextCashRegisterId);
         CashRegisterCreated event = new CashRegisterCreated(cashRegisterId, 1L);
+
         apply(event);
         return event;
+    }
+
+    public ItemRecorded recordItem(CashRegisterId cashRegisterId, ItemId itemId, Money price) {
+        CashRegister cashRegister = get(cashRegisterId);
+        ItemRecorded event = new ItemRecorded(cashRegisterId, cashRegister.getCurrentTicketNumber(), itemId, price);
+
+        apply(event);
+        return event;
+    }
+
+    private CashRegister get(CashRegisterId cashRegisterId) {
+        return cashRegisters.get(cashRegisterId);
     }
 
     private void on(CashRegisterCreated cashRegisterCreated) {
@@ -57,8 +72,4 @@ public class CashRegisterDictionary {
 
     private void on(ShoppingTransactionEnded shoppingTransactionEnded) {
     }
-
-
-
-
 }
