@@ -1,6 +1,7 @@
 package com.drpicox.dddshop.cashregister;
 
 import com.drpicox.dddshop.EventProcessor;
+import com.drpicox.dddshop.ProcessesEvent;
 import com.drpicox.dddshop.events.Event;
 import com.drpicox.dddshop.item.ItemId;
 import com.drpicox.dddshop.shared.Money;
@@ -67,24 +68,29 @@ public class CashRegisterDictionary extends EventProcessor {
         return cashRegisters.get(cashRegisterId);
     }
 
-    private void on(CashRegisterCreated cashRegisterCreated) {
+    @ProcessesEvent
+    protected void on(CashRegisterCreated cashRegisterCreated) {
         nextCashRegisterId = Math.min(cashRegisterCreated.getCashRegisterId().getId() + 1, nextCashRegisterId);
 
         CashRegister cashRegister = new CashRegister(cashRegisterCreated);
         cashRegisters.put(cashRegister.getId(), cashRegister);
     }
 
-    private void on(CashDeliveredRecorded cashDeliveredRecorded) {
+    @ProcessesEvent
+    protected void on(CashDeliveredRecorded cashDeliveredRecorded) {
     }
 
-    private void on(ItemRecorded itemRecorded) {
+    @ProcessesEvent
+    protected void on(ItemRecorded itemRecorded) {
     }
 
-    private void on(ItemRecordsEnded itemRecordsEnded) {
+    @ProcessesEvent
+    protected void on(ItemRecordsEnded itemRecordsEnded) {
         get(itemRecordsEnded.getCashRegisterId()).endItemRecords();
     }
 
-    private void on(ShoppingTransactionEnded shoppingTransactionEnded) {
+    @ProcessesEvent
+    protected void on(ShoppingTransactionEnded shoppingTransactionEnded) {
         get(shoppingTransactionEnded.getCashRegisterId()).endShoppingTransaction(shoppingTransactionEnded);
     }
 }
