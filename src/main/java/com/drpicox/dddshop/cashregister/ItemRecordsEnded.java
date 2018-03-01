@@ -1,17 +1,23 @@
 package com.drpicox.dddshop.cashregister;
 
+import com.drpicox.dddshop.events.Event;
 import com.drpicox.dddshop.item.ItemId;
 import com.drpicox.dddshop.shared.Money;
 
+import javax.persistence.DiscriminatorValue;
+import javax.persistence.Entity;
 import java.io.Serializable;
 
-public class ItemRecordsEnded implements Serializable {
+@Entity
+@DiscriminatorValue(value = "ItemRecordsEnded")
+public class ItemRecordsEnded extends Event {
 
     private CashRegisterId cashRegisterId;
     private Long currentTicketNumber;
 
 
     public ItemRecordsEnded(CashRegisterId cashRegisterId, Long currentTicketNumber) {
+        super("cashregister");
         this.cashRegisterId = cashRegisterId;
         this.currentTicketNumber = currentTicketNumber;
     }

@@ -1,5 +1,7 @@
 package com.drpicox.dddshop.cashregister;
 
+import com.drpicox.dddshop.events.Event;
+import com.drpicox.dddshop.events.EventRepository;
 import com.drpicox.dddshop.item.ItemCtrl;
 import com.drpicox.dddshop.item.ItemId;
 import com.drpicox.dddshop.shared.Money;
@@ -24,6 +26,9 @@ public class CashRegisterCtrl {
     @Autowired
     private CashRegisterRepository cashRegisterRepository;
 
+    @Autowired
+    private EventRepository eventRepository;
+
     public CashRegisterId createCashRegister() {
         CashRegister cashRegister = new CashRegister();
         save(cashRegister);
@@ -32,7 +37,7 @@ public class CashRegisterCtrl {
         save(cashRegister);
 
         CashRegisterId cashRegisterId = cashRegister.getCashRegisterId();
-        queue.send(new CashRegisterCreated(cashRegisterId, cashRegister.getCurrentTicketNumber()));
+        saveAndSend(new CashRegisterCreated(cashRegisterId, cashRegister.getCurrentTicketNumber()));
 
         return cashRegisterId;
     }
@@ -40,14 +45,14 @@ public class CashRegisterCtrl {
     public void recordItem(CashRegisterId cashRegisterId, ItemId itemId) {
         CashRegister cashRegister = get(cashRegisterId);
         Money price = itemCtrl.getPrice(itemId);
-        queue.send(new ItemRecorded(cashRegisterId, cashRegister.getCurrentTicketNumber(), itemId, price));
+        saveAndSend(new ItemRecorded(cashRegisterId, cashRegister.getCurrentTicketNumber(), itemId, price));
     }
 
     public void endItemRecords(CashRegisterId cashRegisterId) {
         CashRegister cashRegister = get(cashRegisterId);
         cashRegister.endItemRecords();
         save(cashRegister);
-        queue.send(new ItemRecordsEnded(cashRegisterId, cashRegister.getCurrentTicketNumber()));
+        saveAndSend(new ItemRecordsEnded(cashRegisterId, cashRegister.getCurrentTicketNumber()));
     }
 
     public Money getTotal(CashRegisterId cashRegisterId) {
@@ -60,7 +65,7 @@ public class CashRegisterCtrl {
     public void recordCashDelivered(CashRegisterId cashRegisterId, Money cashDelivered) {
         CashRegister cashRegister = get(cashRegisterId);
         TicketId ticketId = cashRegister.getTicketId();
-        queue.send(new CashDeliveredRecorded(cashRegisterId, cashRegister.getCurrentTicketNumber(), cashDelivered));
+        saveAndSend(new CashDeliveredRecorded(cashRegisterId, cashRegister.getCurrentTicketNumber(), cashDelivered));
     }
 
     public Money getChange(CashRegisterId cashRegisterId) {
@@ -75,7 +80,7 @@ public class CashRegisterCtrl {
         Long currentTicketNumber = cashRegister.getCurrentTicketNumber();
         cashRegister.endShoppingTransaction();
         save(cashRegister);
-        queue.send(new ShoppingTransactionEnded(cashRegisterId, currentTicketNumber, cashRegister.getCurrentTicketNumber()));
+        saveAndSend(new ShoppingTransactionEnded(cashRegisterId, currentTicketNumber, cashRegister.getCurrentTicketNumber()));
     }
 
     public boolean isReadyToRecordANewItem(CashRegisterId cashRegisterId) {
@@ -89,6 +94,10 @@ public class CashRegisterCtrl {
 
     private void save(CashRegister cashRegister) {
         cashRegisterRepository.save(cashRegister);
+    }
+    private void saveAndSend(Event event) {
+        eventRepository.save(event);
+        queue.send(event);
     }
 
 }
