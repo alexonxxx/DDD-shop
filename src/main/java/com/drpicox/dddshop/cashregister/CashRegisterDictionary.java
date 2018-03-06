@@ -69,7 +69,7 @@ public class CashRegisterDictionary extends EventProcessor {
     }
 
     @ProcessesEvent
-    protected void on(CashRegisterCreated cashRegisterCreated) {
+    public void on(CashRegisterCreated cashRegisterCreated) {
         nextCashRegisterId = Math.min(cashRegisterCreated.getCashRegisterId().getId() + 1, nextCashRegisterId);
 
         CashRegister cashRegister = new CashRegister(cashRegisterCreated);
@@ -77,20 +77,20 @@ public class CashRegisterDictionary extends EventProcessor {
     }
 
     @ProcessesEvent
-    protected void on(CashDeliveredRecorded cashDeliveredRecorded) {
+    public void on(CashDeliveredRecorded cashDeliveredRecorded) {
     }
 
     @ProcessesEvent
-    protected void on(ItemRecorded itemRecorded) {
+    public void on(ItemRecorded itemRecorded) {
     }
 
     @ProcessesEvent
-    protected void on(ItemRecordsEnded itemRecordsEnded) {
+    public void on(ItemRecordsEnded itemRecordsEnded) {
         get(itemRecordsEnded.getCashRegisterId()).endItemRecords();
     }
 
     @ProcessesEvent
-    protected void on(ShoppingTransactionEnded shoppingTransactionEnded) {
+    public void on(ShoppingTransactionEnded shoppingTransactionEnded) {
         get(shoppingTransactionEnded.getCashRegisterId()).endShoppingTransaction(shoppingTransactionEnded);
     }
 }

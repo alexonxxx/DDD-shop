@@ -50,10 +50,12 @@ public class DddShopApplicationTests {
     */
 	@Test
     public void sellOneItem() {
+	    // GIVE
         ItemId itemId = getItemWithPriceInMoney();
         Money price = getItemPrice(itemId);
         CashRegisterId cashRegisterId = getCashRegister();
 
+        // WHEN
         recordItemAtCashRegister(itemId, cashRegisterId);
         endCashRegisterItemRecords(cashRegisterId);
         Money total = getCashRegisterTotal(cashRegisterId);
@@ -62,6 +64,7 @@ public class DddShopApplicationTests {
         Money change = getCashRegisterChange(cashRegisterId);
         endShoppingTransaction(cashRegisterId);
 
+        // THEN
         assertEquals(price, total);
         assertEquals(new Money(3), change);
         assertEquals(true, isCashRegisterReadyToRecordANewItem(cashRegisterId));
