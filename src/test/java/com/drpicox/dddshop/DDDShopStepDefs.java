@@ -11,6 +11,7 @@ import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
 import cucumber.api.java.en.When;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.web.WebAppConfiguration;
 
@@ -19,8 +20,7 @@ import java.util.Map;
 
 import static org.junit.Assert.assertEquals;
 
-@ContextConfiguration(classes = DddShopApplication.class)
-@WebAppConfiguration
+@SpringBootTest
 public class DDDShopStepDefs {
 
     @Autowired
