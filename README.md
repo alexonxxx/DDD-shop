@@ -59,7 +59,7 @@ Add Test All configuration to run:
 - Select "JUnit"
 - Write into Name: "Test All"
 - Select in Test Kind: "All in Package"
-- Write into Package: "com.drpicox.blog"
+- Write into Package: "com.alexonxxx.blog"
 
 To test one test:
 - Go to the test
